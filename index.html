@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tree Suite — Youth-Led Urban Climate Resilience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d07;
+  --surface: #0f1409;
+  --surface-2: #141a0d;
+  --surface-3: #1a2211;
+  --border: rgba(134,194,80,0.12);
+  --border-mid: rgba(134,194,80,0.22);
+  --text: #e8edd8;
+  --text-muted: #8fa07a;
+  --text-faint: #4d5c3a;
+  --primary: #86c250;
+  --primary-glow: rgba(134,194,80,0.15);
+  --primary-hover: #9fd663;
+  --accent: #c8e87a;
+  --warm: #d4a85a;
+  --warm-glow: rgba(212,168,90,0.12);
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+  --text-3xl: clamp(2.5rem, 1rem + 4vw, 5rem);
+  --text-hero: clamp(3rem, 0.5rem + 7vw, 7.5rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+  --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
+  --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+  --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
+  --radius-sm: 0.375rem; --radius-md: 0.5rem;
+  --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-full: 9999px;
+  --ease: cubic-bezier(0.16,1,0.3,1);
+  --content: 1100px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth;scroll-padding-top:5rem;}
+body{min-height:100dvh;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:var(--text-base);line-height:1.65;overflow-x:hidden;}
+img,video,svg{display:block;max-width:100%;height:auto;}
+h1,h2,h3,h4{text-wrap:balance;line-height:1.12;}
+p,li{text-wrap:pretty;max-width:68ch;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;background:none;border:none;font:inherit;color:inherit;}
+::selection{background:rgba(134,194,80,0.25);color:var(--text);}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:var(--radius-sm);}
+
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:var(--space-4) var(--space-8);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  background:rgba(10,13,7,0.75);
+}
+.nav-logo{display:flex;align-items:center;gap:var(--space-3);}
+.nav-logo-icon{width:32px;height:32px;flex-shrink:0;}
+.nav-logo-text{font-family:var(--font-display);font-size:var(--text-lg);color:var(--text);}
+.nav-links{display:flex;align-items:center;gap:var(--space-8);}
+.nav-links a{font-size:var(--text-sm);color:var(--text-muted);transition:color 180ms var(--ease);}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{
+  font-size:var(--text-sm);font-weight:500;
+  padding:var(--space-2) var(--space-5);
+  border:1px solid var(--primary);border-radius:var(--radius-full);
+  color:var(--primary);
+  transition:all 180ms var(--ease);
+}
+.nav-cta:hover{background:var(--primary);color:var(--bg);}
+
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:calc(var(--space-24) + 4rem) var(--space-6) var(--space-24);
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(134,194,80,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(212,168,90,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 70%, rgba(134,194,80,0.05) 0%, transparent 55%);
+}
+.hero-trees{
+  position:absolute;bottom:0;left:0;right:0;pointer-events:none;z-index:0;
+  opacity:0.08;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-size:var(--text-xs);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--primary);background:rgba(134,194,80,0.1);
+  border:1px solid rgba(134,194,80,0.25);border-radius:var(--radius-full);
+  padding:var(--space-1) var(--space-4);margin-bottom:var(--space-6);
+  position:relative;z-index:1;
+}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--primary);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:var(--text-hero);
+  font-style:italic;
+  color:var(--text);
+  line-height:1.0;
+  margin-bottom:var(--space-3);
+  position:relative;z-index:1;
+  letter-spacing:-0.02em;
+}
+.hero-title span{color:var(--primary);}
+.hero-subtitle-line{
+  font-family:var(--font-display);
+  font-size:var(--text-2xl);
+  color:var(--text-muted);
+  font-style:italic;
+  line-height:1.1;
+  margin-bottom:var(--space-8);
+  position:relative;z-index:1;
+  letter-spacing:-0.01em;
+}
+.hero-desc{
+  font-size:var(--text-base);color:var(--text-muted);
+  max-width:56ch;margin:0 auto var(--space-10);
+  position:relative;z-index:1;
+}
+.hero-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center;position:relative;z-index:1;}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-size:var(--text-sm);font-weight:500;
+  padding:var(--space-3) var(--space-7);
+  background:var(--primary);color:var(--bg);
+  border-radius:var(--radius-full);border:1px solid transparent;
+  transition:all 180ms var(--ease);
+}
+.btn-primary:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 8px 24px rgba(134,194,80,0.25);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-size:var(--text-sm);font-weight:500;
+  padding:var(--space-3) var(--space-7);
+  background:transparent;color:var(--text);
+  border:1px solid var(--border-mid);border-radius:var(--radius-full);
+  transition:all 180ms var(--ease);
+}
+.btn-ghost:hover{border-color:rgba(134,194,80,0.4);background:rgba(134,194,80,0.06);}
+.hero-stats{
+  display:flex;flex-wrap:wrap;gap:var(--space-6);justify-content:center;
+  margin-top:var(--space-16);position:relative;z-index:1;
+}
+.hero-stat{text-align:center;}
+.hero-stat-num{
+  font-family:var(--font-display);font-size:var(--text-2xl);
+  color:var(--accent);font-style:italic;line-height:1;
+}
+.hero-stat-label{font-size:var(--text-xs);color:var(--text-faint);letter-spacing:0.08em;text-transform:uppercase;margin-top:var(--space-1);}
+.hero-stat-divider{width:1px;background:var(--border);height:40px;align-self:center;}
+
+.section{padding:clamp(var(--space-16),8vw,var(--space-24)) var(--space-6);}
+.container{max-width:var(--content);margin-inline:auto;width:100%;}
+.section-label{
+  font-size:var(--text-xs);font-weight:500;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--primary);margin-bottom:var(--space-4);
+}
+.section-title{
+  font-family:var(--font-display);font-size:var(--text-2xl);
+  font-style:italic;color:var(--text);margin-bottom:var(--space-4);
+  letter-spacing:-0.01em;
+}
+.section-desc{font-size:var(--text-base);color:var(--text-muted);max-width:58ch;margin-bottom:var(--space-12);}
+
+.ecosystem-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:var(--space-4);
+}
+.product-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-xl);
+  padding:var(--space-8);
+  position:relative;overflow:hidden;
+  transition:all 240ms var(--ease);
+}
+.product-card::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,var(--primary-glow),transparent);
+  transition:opacity 240ms var(--ease);
+  pointer-events:none;border-radius:var(--radius-xl);
+}
+.product-card:hover{border-color:var(--border-mid);transform:translateY(-3px);box-shadow:0 20px 48px rgba(0,0,0,0.4);}
+.product-card:hover::before{opacity:1;}
+.product-num{
+  font-size:var(--text-xs);font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text-faint);margin-bottom:var(--space-6);
+}
+.product-icon{
+  width:48px;height:48px;border-radius:var(--radius-lg);
+  background:var(--primary-glow);border:1px solid rgba(134,194,80,0.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:var(--space-6);font-size:24px;
+}
+.product-name{
+  font-family:var(--font-display);font-size:var(--text-xl);
+  font-style:italic;color:var(--text);margin-bottom:var(--space-2);
+  letter-spacing:-0.01em;
+}
+.product-tagline{
+  font-size:var(--text-xs);font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--primary);margin-bottom:var(--space-4);
+}
+.product-desc{font-size:var(--text-sm);color:var(--text-muted);line-height:1.7;margin-bottom:var(--space-6);}
+.product-features{list-style:none;display:flex;flex-direction:column;gap:var(--space-2);margin-bottom:var(--space-8);}
+.product-features li{
+  font-size:var(--text-xs);color:var(--text-muted);
+  display:flex;align-items:flex-start;gap:var(--space-2);
+}
+.product-features li::before{content:'\2192';color:var(--primary);flex-shrink:0;margin-top:1px;}
+.product-link{
+  display:inline-flex;align-items:center;gap:var(--space-2);
+  font-size:var(--text-xs);font-weight:500;color:var(--primary);
+  border:1px solid rgba(134,194,80,0.3);border-radius:var(--radius-full);
+  padding:var(--space-2) var(--space-4);
+  transition:all 180ms var(--ease);
+}
+.product-link:hover{background:rgba(134,194,80,0.1);border-color:var(--primary);}
+.product-link-soon{
+  font-size:var(--text-xs);font-weight:500;color:var(--text-faint);
+  border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-full);
+  padding:var(--space-2) var(--space-4);
+}
+
+.proof-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.proof-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-4);}
+.proof-card{
+  background:var(--surface-2);border:1px solid var(--border);
+  border-radius:var(--radius-xl);padding:var(--space-8);
+  transition:border-color 240ms var(--ease);
+}
+.proof-card:hover{border-color:var(--border-mid);}
+.proof-label{
+  font-size:var(--text-xs);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--warm);margin-bottom:var(--space-4);
+}
+.proof-title{
+  font-family:var(--font-display);font-size:var(--text-xl);
+  font-style:italic;color:var(--text);margin-bottom:var(--space-3);
+}
+.proof-desc{font-size:var(--text-sm);color:var(--text-muted);line-height:1.7;}
+.proof-tag{
+  display:inline-block;margin-top:var(--space-4);
+  font-size:var(--text-xs);color:var(--text-faint);
+  border:1px solid var(--border);border-radius:var(--radius-full);
+  padding:var(--space-1) var(--space-3);
+}
+
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-4);position:relative;}
+.timeline::before{
+  content:'';position:absolute;top:24px;left:calc(12.5%);right:calc(12.5%);
+  height:1px;background:linear-gradient(90deg,transparent,var(--border-mid),var(--border-mid),transparent);
+  z-index:0;
+}
+.timeline-item{position:relative;z-index:1;}
+.timeline-dot{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto var(--space-4);font-size:18px;
+  transition:all 240ms var(--ease);
+}
+.timeline-item:hover .timeline-dot{border-color:var(--primary);background:var(--primary-glow);}
+.timeline-month{
+  text-align:center;font-size:var(--text-xs);font-weight:600;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--primary);margin-bottom:var(--space-2);
+}
+.timeline-title{text-align:center;font-size:var(--text-sm);font-weight:500;color:var(--text);margin-bottom:var(--space-2);}
+.timeline-desc{text-align:center;font-size:var(--text-xs);color:var(--text-muted);line-height:1.6;}
+
+.sdg-tags{display:flex;flex-wrap:wrap;gap:var(--space-2);}
+.sdg-tag{
+  font-size:var(--text-xs);font-weight:500;
+  padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);
+}
+.sdg-11{background:rgba(253,152,35,0.12);color:#fd9823;border:1px solid rgba(253,152,35,0.25);}
+.sdg-13{background:rgba(63,126,68,0.15);color:#6dbe74;border:1px solid rgba(63,126,68,0.3);}
+.sdg-15{background:rgba(86,190,65,0.12);color:#56be41;border:1px solid rgba(86,190,65,0.25);}
+.sdg-3{background:rgba(76,159,56,0.12);color:#4c9f38;border:1px solid rgba(76,159,56,0.25);}
+.sdg-17{background:rgba(25,72,106,0.2);color:#6aaec8;border:1px solid rgba(25,72,106,0.35);}
+
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);}
+.team-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);
+  padding:var(--space-6);text-align:center;
+  transition:border-color 240ms var(--ease);
+}
+.team-card:hover{border-color:var(--border-mid);}
+.team-avatar{
+  width:56px;height:56px;border-radius:50%;
+  background:var(--surface-3);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin:0 auto var(--space-4);
+}
+.team-name{font-size:var(--text-sm);font-weight:600;color:var(--text);margin-bottom:var(--space-1);}
+.team-role{font-size:var(--text-xs);color:var(--primary);margin-bottom:var(--space-3);}
+.team-desc{font-size:var(--text-xs);color:var(--text-muted);line-height:1.6;}
+
+.pub-list{display:flex;flex-direction:column;gap:var(--space-3);}
+.pub-item{
+  display:flex;align-items:flex-start;gap:var(--space-4);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:var(--space-5);transition:all 180ms var(--ease);
+  text-decoration:none;
+}
+.pub-item:hover{border-color:var(--border-mid);background:var(--surface-2);transform:translateX(4px);}
+.pub-icon{
+  width:36px;height:36px;border-radius:var(--radius-md);
+  background:var(--primary-glow);border:1px solid rgba(134,194,80,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.pub-label{font-size:var(--text-xs);color:var(--primary);margin-bottom:var(--space-1);font-weight:500;}
+.pub-title{font-size:var(--text-sm);color:var(--text);font-weight:500;}
+
+.cta-banner{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-xl);
+  padding:var(--space-12);text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-banner::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(134,194,80,0.07), transparent);
+  pointer-events:none;
+}
+.cta-title{
+  font-family:var(--font-display);font-size:var(--text-2xl);
+  font-style:italic;color:var(--text);margin-bottom:var(--space-4);
+  position:relative;z-index:1;
+}
+.cta-desc{font-size:var(--text-base);color:var(--text-muted);margin-bottom:var(--space-8);position:relative;z-index:1;}
+.cta-actions{display:flex;flex-wrap:wrap;gap:var(--space-3);justify-content:center;position:relative;z-index:1;}
+
+footer{
+  border-top:1px solid var(--border);
+  padding:var(--space-10) var(--space-6);
+  display:flex;flex-direction:column;align-items:center;gap:var(--space-4);
+  text-align:center;
+}
+.footer-logo{font-family:var(--font-display);font-style:italic;font-size:var(--text-lg);color:var(--text-muted);}
+.footer-tagline{font-size:var(--text-xs);color:var(--text-faint);}
+.footer-links{display:flex;gap:var(--space-6);}
+.footer-links a{font-size:var(--text-xs);color:var(--text-faint);transition:color 180ms var(--ease);}
+.footer-links a:hover{color:var(--primary);}
+
+.divider{height:1px;background:var(--border);margin:0;}
+
+@media(max-width:900px){
+  .ecosystem-grid,.proof-grid,.team-grid{grid-template-columns:1fr;}
+  .timeline{grid-template-columns:1fr 1fr;}
+  .timeline::before{display:none;}
+  .nav-links{display:none;}
+}
+@media(max-width:600px){
+  nav{padding:var(--space-3) var(--space-4);}
+  .hero-stats{gap:var(--space-4);}
+  .hero-stat-divider{display:none;}
+  .timeline{grid-template-columns:1fr;}
+  .hero-title{letter-spacing:-0.015em;}
+}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 600ms var(--ease),transform 600ms var(--ease);}
+.reveal.in-view{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:80ms;}
+.reveal-delay-2{transition-delay:160ms;}
+.reveal-delay-3{transition-delay:240ms;}
+.reveal-delay-4{transition-delay:320ms;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Tree Suite logo">
+      <circle cx="16" cy="16" r="16" fill="rgba(134,194,80,0.1)"/>
+      <path d="M16 6 C16 6 8 12 8 18 C8 22 11.5 25 16 25 C20.5 25 24 22 24 18 C24 12 16 6 16 6Z" fill="rgba(134,194,80,0.25)" stroke="#86c250" stroke-width="1.2"/>
+      <path d="M16 25 L16 28" stroke="#86c250" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M12 20 C12 20 9 17 10 14" stroke="rgba(134,194,80,0.5)" stroke-width="1" stroke-linecap="round"/>
+      <path d="M20 20 C20 20 23 17 22 14" stroke="rgba(134,194,80,0.5)" stroke-width="1" stroke-linecap="round"/>
+      <circle cx="16" cy="15" r="2" fill="#86c250" opacity="0.8"/>
+    </svg>
+    <span class="nav-logo-text">Tree Suite</span>
+  </div>
+  <div class="nav-links">
+    <a href="#ecosystem">Projects</a>
+    <a href="#impact">Impact</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#team">Team</a>
+  </div>
+  <a href="https://pune-tree-dashboard-sample.vercel.app/" target="_blank" rel="noopener noreferrer" class="nav-cta">Live Demo &#x2192;</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-trees" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,200 L0,140 Q20,120 40,100 Q60,80 80,100 Q90,110 100,100 Q110,80 130,80 Q150,80 160,100 Q170,110 180,100 Q200,70 220,60 Q240,70 260,100 Q280,120 300,100 Q310,90 320,80 Q340,60 360,80 Q380,90 390,100 Q410,80 430,70 Q450,60 470,70 Q490,80 510,100 Q530,120 550,100 Q560,90 580,80 Q600,60 620,80 Q640,90 660,100 Q680,110 700,100 Q710,90 730,80 Q750,60 770,80 Q790,90 800,100 Q820,80 840,70 Q860,60 880,70 Q900,80 920,100 Q940,120 960,100 Q970,90 990,80 Q1010,60 1030,80 Q1050,90 1060,100 Q1080,80 1100,70 Q1120,60 1140,70 Q1160,80 1180,100 Q1200,120 1220,100 Q1240,80 1260,70 Q1280,60 1300,70 Q1320,80 1340,100 Q1360,110 1380,100 Q1400,90 1420,100 Q1430,110 1440,100 L1440,200 Z" fill="currentColor"/>
+  </svg>
+  <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>YEF Cycle 3 Application &#x2014; Pune, India</div>
+  <h1 class="hero-title"><span>Tree</span> Suite</h1>
+  <div class="hero-subtitle-line">Urban forests as civic infrastructure</div>
+  <p class="hero-desc">A youth-led ecosystem of three tools empowering Pune citizens to map, understand, and benefit from their city&#8217;s trees &#x2014; turning invisible urban nature into climate action and community wellbeing.</p>
+  <div class="hero-actions">
+    <a href="https://tree-measurement-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/></svg>
+      Try TreeFolio
+    </a>
+    <a href="https://pune-tree-dashboard-sample.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-ghost">Explore Dashboard &#x2192;</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">1.79M</div><div class="hero-stat-label">Trees mapped, Pune</div></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat"><div class="hero-stat-num">77</div><div class="hero-stat-label">Wards analyzed</div></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat"><div class="hero-stat-num">397</div><div class="hero-stat-label">Species catalogued</div></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat"><div class="hero-stat-num">288K</div><div class="hero-stat-label">Tonnes CO&#x2082; sequestered</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="ecosystem">
+  <div class="container">
+    <p class="section-label reveal">The Three-Layer Ecosystem</p>
+    <h2 class="section-title reveal">One suite. Roots to canopy<br>to community.</h2>
+    <p class="section-desc reveal">Like G Suite for productivity, Tree Suite integrates three tools so data flows from citizen capture &#x2192; city intelligence &#x2192; human wellbeing.</p>
+    <div class="ecosystem-grid">
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-num">01 &#x2014; Capture</div>
+        <div class="product-icon">&#127807;</div>
+        <div class="product-name">TreeFolio</div>
+        <div class="product-tagline">The Roots</div>
+        <p class="product-desc">Transforms any smartphone into a professional tree measurement tool using AI (Meta SAM) and AR &#x2014; no equipment needed. Any citizen can map height, canopy, species, and CO&#x2082; in 5 minutes.</p>
+        <ul class="product-features">
+          <li>AI-powered species ID via PlantNet (20,000+ species)</li>
+          <li>AR distance ruler + Chave 2014 CO&#x2082; equation</li>
+          <li>Community verification consensus system</li>
+          <li>Gamified: Sapling Points, squad mapping missions</li>
+          <li>5% cost of traditional surveys (&#x20B9;1 vs &#x20B9;20/tree)</li>
+        </ul>
+        <a href="https://tree-measurement-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" class="product-link">Live Demo &#x2197;</a>
+      </div>
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-num">02 &#x2014; Analyze</div>
+        <div class="product-icon">&#128506;</div>
+        <div class="product-name">Tree Intelligence</div>
+        <div class="product-tagline">The Canopy</div>
+        <p class="product-desc">City-scale urban forest digital twin. Ward-level heat, CO&#x2082;, and green-cover analytics from 1.79M Pune trees + 7 years of satellite data &#x2014; turning raw census into planning intelligence.</p>
+        <ul class="product-features">
+          <li>Digital twin: every tree CO&#x2082;-tagged, geolocated</li>
+          <li>Heat island overlay (LST), 10m green-cover change</li>
+          <li>Ward Green Score: composite equity index</li>
+          <li>Drag-drop planting advisor (5&#xB0;C cooling prediction)</li>
+          <li>3D shadow simulation, 60fps for 5k trees</li>
+        </ul>
+        <a href="https://pune-tree-dashboard-sample.vercel.app/" target="_blank" rel="noopener noreferrer" class="product-link">Live Demo &#x2197;</a>
+      </div>
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-num">03 &#x2014; Wellbeing</div>
+        <div class="product-icon">&#129510;</div>
+        <div class="product-name">Eco-Path Pune</div>
+        <div class="product-tagline">The Community</div>
+        <p class="product-desc">Gives citizens something back. Generates greener walking routes and GPS-triggered tree meditations &#x2014; as you pass a mango tree, you hear: &#8220;abundance flows like a mango.&#8221; Nature as teacher.</p>
+        <ul class="product-features">
+          <li>Routes scored by tree canopy, CO&#x2082;, biodiversity</li>
+          <li>Gemini-powered meditation scripts per tree species</li>
+          <li>Offline Piper TTS &#x2014; no cloud audio cost</li>
+          <li>AQI + water-table overlays (roadmap)</li>
+          <li>Post-walk reflection: journey insights</li>
+        </ul>
+        <span class="product-link-soon">Beta &#x2014; June 2027</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section proof-section" id="impact">
+  <div class="container">
+    <p class="section-label reveal">Proven Impact</p>
+    <h2 class="section-title reveal">Not a concept.<br>Production-grade, community-used.</h2>
+    <p class="section-desc reveal">Real trees, real campaigns, real communities.</p>
+    <div class="proof-grid">
+      <div class="proof-card reveal reveal-delay-1">
+        <div class="proof-label">&#127795; Civic Activism</div>
+        <div class="proof-title">Warrior Moms, Pune</div>
+        <p class="proof-desc">Pune&#8217;s grassroots tree-protection group uses Tree Suite data to run RTI campaigns against illegal felling &#x2014; giving citizens verifiable evidence to challenge construction permits with data, not just protest.</p>
+        <span class="proof-tag">Ongoing collaboration</span>
+      </div>
+      <div class="proof-card reveal reveal-delay-2">
+        <div class="proof-label">&#127891; Institutional</div>
+        <div class="proof-title">NIT Trichy Campus</div>
+        <p class="proof-desc">~800-acre campus digitized for NIRF/NAAC accreditation &#x2014; a natural asset baseline for India&#8217;s top technical institution. Proves municipal and academic scalability of the citizen-mapping model.</p>
+        <span class="proof-tag">Mapped &amp; deployed</span>
+      </div>
+      <div class="proof-card reveal reveal-delay-3">
+        <div class="proof-label">&#128300; Research</div>
+        <div class="proof-title">arXiv Publication</div>
+        <p class="proof-desc">Peer-reviewed framework paper on citizen-centric climate intelligence: TreeFolio + Dashboard methodology published on arXiv, presented at IndiaFOSS 2025 open-source conference.</p>
+        <a href="https://arxiv.org/abs/2508.17648" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:var(--space-4);font-size:var(--text-xs);color:var(--primary);">Read paper &#x2197;</a>
+      </div>
+      <div class="proof-card reveal reveal-delay-4">
+        <div class="proof-label">&#127757; Open Data</div>
+        <div class="proof-title">Digital Public Good</div>
+        <p class="proof-desc">All datasets released under ODbL (Open Database License) &#x2014; free to download, analyze, redistribute. No paywalls, no registration. Enabling RTI activists, journalists, researchers, and climate justice groups.</p>
+        <span class="proof-tag">Open source</span>
+      </div>
+    </div>
+    <div style="margin-top:var(--space-8);">
+      <div class="sdg-tags reveal">
+        <span class="sdg-tag sdg-11">SDG 11 Sustainable Cities</span>
+        <span class="sdg-tag sdg-13">SDG 13 Climate Action</span>
+        <span class="sdg-tag sdg-15">SDG 15 Life on Land</span>
+        <span class="sdg-tag sdg-3">SDG 3 Good Health</span>
+        <span class="sdg-tag sdg-17">SDG 17 Partnerships</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="roadmap">
+  <div class="container">
+    <p class="section-label reveal">4-Month Roadmap</p>
+    <h2 class="section-title reveal">April &#x2192; July 2027</h2>
+    <p class="section-desc reveal">YEF Cycle 3 activities: community mobilization, analytics deployment, wellbeing launch, and open-data advocacy.</p>
+    <div class="timeline">
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-dot">&#127807;</div>
+        <div class="timeline-month">April 2027</div>
+        <div class="timeline-title">Citizen Mapper Drive</div>
+        <p class="timeline-desc">4 free workshops, 50 youth/citizens trained. 2,500 trees mapped in low-income wards with AI/AR.</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-dot">&#128506;</div>
+        <div class="timeline-month">May 2027</div>
+        <div class="timeline-title">Dashboard Integration</div>
+        <p class="timeline-desc">New data + heat/AQI overlays. 5 priority wards analyzed for tree equity &amp; CO&#x2082; sinks in community sessions.</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-dot">&#129510;</div>
+        <div class="timeline-month">June 2027</div>
+        <div class="timeline-title">Eco-Path Beta Launch</div>
+        <p class="timeline-desc">200 users. Green meditation loops tested with 10 youth walks. Multilingual for inclusion.</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-4">
+        <div class="timeline-dot">&#128226;</div>
+        <div class="timeline-month">July 2027</div>
+        <div class="timeline-title">Advocacy &amp; Open Data</div>
+        <p class="timeline-desc">2 NGO demos, Warrior Moms RTI data export. Public &#8220;Pune Tree Equity Index&#8221; report released.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="team">
+  <div class="container">
+    <p class="section-label reveal">Team &amp; Partners</p>
+    <h2 class="section-title reveal">Youth-led, community-rooted.</h2>
+    <div class="team-grid">
+      <div class="team-card reveal reveal-delay-1">
+        <div class="team-avatar">&#128100;</div>
+        <div class="team-name">Kaushik Ravi</div>
+        <div class="team-role">Project Lead (23yo)</div>
+        <p class="team-desc">Designer, developer, researcher. Building Tree Suite from NIT Trichy &#x2192; Pune. Full-stack, GIS/ML, IndiaFOSS speaker.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-2">
+        <div class="team-avatar">&#129309;</div>
+        <div class="team-name">REAP Benefit</div>
+        <div class="team-role">Mentor Organization</div>
+        <p class="team-desc">Youth network connections, workshop venue/logistics support, mentorship throughout project implementation.</p>
+      </div>
+      <div class="team-card reveal reveal-delay-3">
+        <div class="team-avatar">&#127795;</div>
+        <div class="team-name">Warrior Moms Pune</div>
+        <div class="team-role">Community Partner</div>
+        <p class="team-desc">Tree advocacy guidance, co-hosts demos, uses Tree Suite data to run RTI campaigns protecting heritage trees.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="container">
+    <p class="section-label reveal">Resources &amp; Evidence</p>
+    <h2 class="section-title reveal">Built in public. Open source.</h2>
+    <div class="pub-list">
+      <a href="https://tree-measurement-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" class="pub-item reveal reveal-delay-1">
+        <div class="pub-icon">&#127807;</div>
+        <div class="pub-text"><div class="pub-label">Live Application</div><div class="pub-title">TreeFolio &#x2014; Citizen Tree Measurement App</div></div>
+      </a>
+      <a href="https://pune-tree-dashboard-sample.vercel.app/" target="_blank" rel="noopener noreferrer" class="pub-item reveal reveal-delay-2">
+        <div class="pub-icon">&#128506;</div>
+        <div class="pub-text"><div class="pub-label">Live Application</div><div class="pub-title">Pune Urban Tree Intelligence Dashboard</div></div>
+      </a>
+      <a href="https://www.youtube.com/watch?v=HEREIbWHAPA" target="_blank" rel="noopener noreferrer" class="pub-item reveal reveal-delay-3">
+        <div class="pub-icon">&#9654;&#65039;</div>
+        <div class="pub-text"><div class="pub-label">Demo Video</div><div class="pub-title">TreeFolio: Field measurement walkthrough</div></div>
+      </a>
+      <a href="https://youtu.be/hYl3yrLU9-k" target="_blank" rel="noopener noreferrer" class="pub-item reveal reveal-delay-4">
+        <div class="pub-icon">&#9654;&#65039;</div>
+        <div class="pub-text"><div class="pub-label">Conference Talk &#x2014; IndiaFOSS / FOSS United</div><div class="pub-title">Tree Dashboard: Motivation, development &amp; impact</div></div>
+      </a>
+      <a href="https://arxiv.org/abs/2508.17648" target="_blank" rel="noopener noreferrer" class="pub-item reveal">
+        <div class="pub-icon">&#128196;</div>
+        <div class="pub-text"><div class="pub-label">Research Paper &#x2014; arXiv</div><div class="pub-title">Citizen-Centric Climate Intelligence: TreeFolio &amp; Dashboard Framework</div></div>
+      </a>
+      <a href="https://github.com/Kaushik-Ravi/pune-tree-dashboard-sample" target="_blank" rel="noopener noreferrer" class="pub-item reveal">
+        <div class="pub-icon">&#128187;</div>
+        <div class="pub-text"><div class="pub-label">Source Code &#x2014; GitHub</div><div class="pub-title">Pune Tree Dashboard &#x2014; Open Source Repository</div></div>
+      </a>
+      <a href="https://github.com/Kaushik-Ravi/tree-measurement-frontend" target="_blank" rel="noopener noreferrer" class="pub-item reveal">
+        <div class="pub-icon">&#128187;</div>
+        <div class="pub-text"><div class="pub-label">Source Code &#x2014; GitHub</div><div class="pub-title">TreeFolio App &#x2014; Open Source Repository</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-banner reveal">
+      <h2 class="cta-title">Every tree falling is data we didn&#8217;t collect in time.</h2>
+      <p class="cta-desc">Tree Suite turns citizen passion into unstoppable momentum. Join the YEF Cycle 3 journey &#x2014; map, understand, protect.</p>
+      <div class="cta-actions">
+        <a href="https://tree-measurement-frontend.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary">Try TreeFolio Now</a>
+        <a href="https://pune-tree-dashboard-sample.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-ghost">Explore the Dashboard &#x2192;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Tree Suite</div>
+  <p class="footer-tagline">Making environmental data as accessible as the air we breathe &#x2014; and the trees that clean it.</p>
+  <div class="footer-links">
+    <a href="https://github.com/Kaushik-Ravi" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://www.kaushikravi.tech/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+    <a href="https://arxiv.org/abs/2508.17648" target="_blank" rel="noopener noreferrer">Research</a>
+  </div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in-view'); observer.unobserve(e.target); }
+  });
+},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const counters = document.querySelectorAll('.hero-stat-num');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const raw = el.textContent.trim();
+    const suffix = raw.replace(/[0-9.]/g,'');
+    const num = parseFloat(raw);
+    if(isNaN(num)){ countObserver.unobserve(el); return; }
+    let start = 0;
+    const duration = 1600;
+    const step = ts => {
+      if(!start) start = ts;
+      const p = Math.min((ts-start)/duration,1);
+      const ease = 1-Math.pow(1-p,4);
+      const val = num*ease;
+      el.textContent = (val >= 1000 ? (val/1000).toFixed(val>=100000?0:2)+'K' : val >= 100 ? Math.round(val) : val.toFixed(0)) + (suffix && suffix!=='K'?suffix:'');
+      if(p<1) requestAnimationFrame(step);
+      else el.textContent = raw;
+    };
+    requestAnimationFrame(step);
+    countObserver.unobserve(el);
+  });
+},{threshold:0.5});
+counters.forEach(c => countObserver.observe(c));
+</script>
+</body>
+</html>
